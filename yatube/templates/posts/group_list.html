@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block content %}
+<h1>Записи сообщества {{ group.title }}</h1>
+<p>{{ group.description }}</p>
+<article>
+  {% for post in posts %}
+    <ul>
+      <li>Автор: {{ post.author.get_full_name }}</li>
+      <li>Дата публикации: {{ post.pub_date|date:"d M Y" }}</li>
+    </ul>
+    <p>{{ post.text }}</p>
+    <!-- под последним постом нет линии -->
+    {% if not forloop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+</article>
+{% endblock %}
