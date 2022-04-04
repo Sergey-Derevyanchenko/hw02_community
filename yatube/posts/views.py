@@ -1,11 +1,12 @@
+from django.conf import settings
 from django.shortcuts import get_object_or_404, render
-from yatube.settings import MAX_POSTS
 
 from .models import Group, Post
 
+limit = settings.MAX_POSTS
 
 def index(request):
-    posts = Post.objects.all()[:MAX_POSTS]
+    posts = Post.objects.select_related('group', 'author')[:limit]
     context = {
         'posts': posts,
     }
@@ -14,7 +15,7 @@ def index(request):
 
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
-    posts = Post.objects.all()[:MAX_POSTS]
+    posts = group.posts.all()[:limit]
     context = {
         'group': group,
         'posts': posts,
