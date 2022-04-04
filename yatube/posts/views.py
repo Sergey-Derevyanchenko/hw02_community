@@ -5,6 +5,7 @@ from .models import Group, Post
 
 limit = settings.MAX_POSTS
 
+
 def index(request):
     posts = Post.objects.select_related('group', 'author')[:limit]
     context = {
