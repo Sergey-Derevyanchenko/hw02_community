@@ -3,11 +3,9 @@ from django.shortcuts import get_object_or_404, render
 
 from .models import Group, Post
 
-limit = settings.MAX_POSTS
-
 
 def index(request):
-    posts = Post.objects.select_related('group', 'author')[:limit]
+    posts = Post.objects.select_related('group', 'author')[:settings.MAX_POSTS]
     context = {
         'posts': posts,
     }
@@ -16,7 +14,7 @@ def index(request):
 
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
-    posts = group.posts.all()[:limit]
+    posts = group.posts.select_related('author').all()[:settings.MAX_POSTS]
     context = {
         'group': group,
         'posts': posts,

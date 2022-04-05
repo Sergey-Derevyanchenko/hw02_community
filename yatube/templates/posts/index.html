@@ -5,7 +5,6 @@
 {% block content %}
   <h1>Последние обновления на сайте</h1>
   {% for post in posts %}
-    {% include 'posts/includes/post_card.html' with need_link=True %}    
-    {% if not forloop.last %}<hr>{% endif %}
+    {% include 'posts/post_card.html' %}
   {% endfor %}
 {% endblock %}
